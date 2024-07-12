@@ -1,0 +1,86 @@
+syntax = "v1"
+
+info (
+	title:  "密码服务"
+	desc:   "密码服务"
+	author: "Geen"
+	email:  "962044945@qq.com"
+)
+
+type PWD {
+	ID      int64  `form:"id"`
+	Name    string `form:"name"`
+	Url     string `form:"url"`
+	Account string `form:"account"`
+	Pwd     string `form:pwd`
+	Remark  string `form:"remark"`
+}
+
+type (
+	CreatePwdReq {
+		Name    string `form:"name"`
+		Url     string `form:"url"`
+		Account string `form:"account"`
+		Pwd     string `form:pwd`
+		Remark  string `form:"remark"`
+	}
+	CreatePwdResp {
+		Code string `from:"code"`
+		Msg  string `form:"msg"`
+	}
+)
+
+type (
+	UpdatePwdReq {
+		Name    string `form:"name"`
+		Url     string `form:"url"`
+		Account string `form:"account"`
+		Pwd     string `form:pwd`
+		Remark  string `form:"remark"`
+	}
+	UpdatePwdResp {
+		Code string `from:"code"`
+		Msg  string `form:"msg"`
+	}
+)
+
+type (
+	GetPwdListReq {
+		PageNum  int64 `form:"pageNum"`
+		PageSize int64 `form:"pageNum"`
+	}
+	GetPwdListResp {
+		Code string `from:"code"`
+		Msg  string `form:"msg"`
+		Data []PWD  `form:data`
+	}
+)
+
+type (
+	DelPwdReq {
+		ID []int64 `form:"id"`
+	}
+	DelPwdResp {
+		Code string `from:"code"`
+		Msg  string `form:"msg"`
+	}
+)
+
+@server (
+	prefix: pwd/v1
+	group:  pwd/v1
+)
+service pwd-api {
+	@handler createPwdHandler
+	post /create (CreatePwdReq) returns (CreatePwdResp)
+
+	@handler getPwdListHandler
+	get /list (GetPwdListReq) returns (GetPwdListResp)
+
+	@handler updatePwdHandler
+	post /update/:id (UpdatePwdReq) returns (UpdatePwdResp)
+
+	@handler DelPwdHandler
+	get /del (DelPwdReq) returns (DelPwdResp)
+}
+

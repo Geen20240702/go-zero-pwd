@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package pwd;
+option go_package="./pwd";
+
+message PWD {
+  int64 ID = 1; 
+	string Name = 2;
+	string Url = 3;
+	string Account = 4;
+	string Pwd = 5; 
+	string Remark = 6;
+}
+
+message CreatePwdReq {
+  string Name = 1;
+  string Url = 2;
+  string Account = 3;
+  string Pwd = 4;
+  string Remark = 5;
+}
+
+message CreatePwdResp {
+  string Code = 1;
+  string Msg = 2;
+}
+
+message UpdatePwdReq {
+  string Name = 1;
+  string Url = 2;
+  string Account = 3;
+  string Pwd = 4;
+  string Remark = 5;
+}
+
+message UpdatePwdResp {
+  string Code = 1;
+  string Msg = 2;
+}
+
+message GetPwdListReq {
+  int64 PageNum = 1;
+  int64 PageSize = 2;
+}
+
+message GetPwdListResp {
+  string Code = 1;
+  string Msg = 2;
+  repeated PWD Data = 3;
+}
+
+message DelPwdReq{
+  repeated int64 ID = 1;
+}
+
+message DelPwdResp {
+  string Code = 1;
+  string Msg = 2;
+}
+
+service Pwd {
+  rpc CreatePwd(CreatePwdReq) returns(CreatePwdResp);
+  rpc UpdatePwd(UpdatePwdReq) returns(UpdatePwdResp);
+  rpc GetPwdList(GetPwdListReq) returns(GetPwdListResp);
+  rpc DelPwd(DelPwdReq) returns(DelPwdResp);
+}
